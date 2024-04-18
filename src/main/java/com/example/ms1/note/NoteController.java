@@ -53,11 +53,22 @@ public class NoteController {
     @PostMapping("/update")
     public String update(Long id, String title, String content) {
         Note note = noteRepository.findById(id).get();
+
+        if (title.trim().length() == 0) {
+            title = "제목 없음";
+        }
+
         note.setTitle(title);
         note.setContent(content);
 
         noteRepository.save(note);
-        return String.format("redirect:/detail/%s" + id);
+        return String.format("redirect:/detail/%s", id);
+    }
+
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable("id") Long id) {
+        noteRepository.deleteById(id);
+        return "redirect:/";
     }
 
     private Note saveDefault() {
