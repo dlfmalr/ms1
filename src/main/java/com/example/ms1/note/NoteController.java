@@ -1,4 +1,4 @@
-package com.example.ms1;
+package com.example.ms1.note;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,6 +24,11 @@ public class NoteController {
     public String main(Model model) {
         List<Note> noteList = noteRepository.findAll();
 
+        if (noteList.isEmpty()) {
+            saveDefault();
+            return "redirect:/";
+        }
+
         model.addAttribute("noteList", noteList);
         model.addAttribute("targetNote", noteList.get(0));
 
@@ -32,13 +37,8 @@ public class NoteController {
 
     @PostMapping("/write")
     public String write() {
-        Note note = new Note();
-        note.setTitle("new title");
-        note.setContent("");
-        note.setCreateDate(LocalDateTime.now());
 
-        noteRepository.save(note);
-
+        saveDefault();
         return "redirect:/";
     }
 
@@ -59,5 +59,14 @@ public class NoteController {
 
         noteRepository.save(note);
         return String.format("redirect:/detail/%s" + id);
+    }
+
+    private Note saveDefault() {
+        Note note = new Note();
+        note.setTitle("new title");
+        note.setContent("");
+        note.setCreateDate(LocalDateTime.now());
+
+        return noteRepository.save(note);
     }
 }

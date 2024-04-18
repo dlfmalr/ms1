@@ -1,4 +1,4 @@
-package com.example.ms1;
+package com.example.ms1.note;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
