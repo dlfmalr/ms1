@@ -37,8 +37,8 @@ public class NoteController {
 
     @PostMapping("/write")
     public String write() {
-
         saveDefault();
+
         return "redirect:/";
     }
 
@@ -47,7 +47,6 @@ public class NoteController {
         Note note = noteRepository.findById(id).get();
         model.addAttribute("targetNote", note);
         model.addAttribute("noteList", noteRepository.findAll());
-
         return "main";
     }
 
