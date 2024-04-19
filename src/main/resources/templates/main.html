@@ -8,29 +8,29 @@
 </head>
 <body>
 <div class="bg-white-400">
-    <div class="bg-rose-200">
+    <div class="bg-blue-200">
         <a href="/">logo</a>
     </div>
-    <div class="bg-pink-100 flex">
-        <div class="bg-rose-200 w-[20%]">
+    <div class="bg-blue-100 flex">
+        <div class="bg-blue-200 w-[20%]">
             <ul class="h-[100%] overflow-scroll">
-                <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'bg-rose-300' : ''">
+                <li th:each="notebook : ${notebookList}" th:class="${notebook.id == targetNotebook.id} ? 'bg-blue-300' : ''">
                     <a th:href="@{|/detail/${notebook.id}|}" th:text="${notebook.name}"></a>
                 </li>
             </ul>
         </div>
-        <div class="bg-pink-100 w-[20%] h-[800px] text-center">
+        <div class="bg-blue-100 w-[20%] h-[800px] text-center">
             <ul class="h-[100%] overflow-scroll">
-                <li th:each="note : ${noteList}" th:class="${note.id == targetNote.id} ? 'bg-pink-200' : ''">
-                    <a th:href="@{|/detail/${note.id}|}" th:text="${note.title}"></a>
+                <li th:each="note : ${noteList}" th:class="${note.id == targetNote.id} ? 'bg-sky-200' : ''">
+                    <a th:href="@{|/books/${targetNotebook.id}/notes/${note.id}|}" th:text="${note.title}"></a>
                 </li>
             </ul>
-            <form th:action="@{|/books/${targetNotebook.id}/write|}" method="post">
+            <form th:action="@{|/books/${targetNotebook.id}/notes/write|}" method="post">
                 <input type="submit" value="추가">
             </form>
         </div>
-        <div class="bg-pink-100 w-[60%]">
-            <form action="/update" method="post" id="updateForm">
+        <div class="bg-blue-100 w-[60%]">
+            <form th:action="@{|/books/${targetNotebook.id}/notes/${targetNote.id}/update|}" method="post" id="updateForm">
                 <div>
                     <input type="hidden" name="id" th:value="${targetNote.id}">
                 </div>
@@ -44,7 +44,7 @@
                     <input type="button" value="수정" onclick="updateForm()">
                 </div>
             </form>
-            <form th:action="@{|/delete/${targetNote.id}|}" method="post" id="deleteForm">
+            <form th:action="@{|/books/${targetNotebook.id}/notes/${targetNote.id}/delete|}" method="post" id="deleteForm">
                 <input type="button" value="삭제" onclick="deleteForm();">
             </form>
         </div>
